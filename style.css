@@ -1,0 +1,73 @@
+html {
+    background-image: url('images/tictactoe.jpg');
+    background-size: 500px;
+}
+
+p {
+    font-family: cursive;
+    background-color: gold;
+    width:250px;
+    text-align: center;
+    border : 0px solid black;
+    border-radius: 8px;
+}
+
+.grid {
+    display: grid;
+    border : 1px solid black;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    width: 300px;
+    height: 300px;
+    background-color:ghostwhite;
+}
+
+.cell {
+    border: 1px solid black;
+    text-align: center;
+    font-size: 70px;
+    font-family: cursive;
+    color: gold;
+}
+
+.restartButton {
+    border : 0px solid black;
+    font-family: cursive;
+    border-radius: 8px;
+    padding: 4px 30px;
+    font-size: 20px;
+    background-color:gold;
+}
+
+.winningText {
+    font-family: cursive;
+    font-size: 30px;
+    background-color: gold;
+    width:400px;
+    height: max-content;
+    border-radius: 8px;
+    color:red; 
+	-webkit-animation: winningText 2s cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite both;
+	animation: winningText 2s cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite both;
+            
+}
+@-webkit-keyframes winningText {
+    0% {
+      -webkit-transform: scale(0.5);
+              transform: scale(0.5);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+}
+@keyframes winningText {
+    0% {
+      -webkit-transform: scale(0.5);
+              transform: scale(0.5);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+}
