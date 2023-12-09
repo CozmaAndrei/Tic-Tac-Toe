@@ -39,7 +39,7 @@ p {
     background-color:gold;
 }
 
-.winningText {
+.textMessage {
     font-family: cursive;
     font-size: 30px;
     background-color: gold;
@@ -47,27 +47,4 @@ p {
     height: max-content;
     border-radius: 8px;
     color:red; 
-	-webkit-animation: winningText 2s cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite both;
-	animation: winningText 2s cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite both;
-            
-}
-@-webkit-keyframes winningText {
-    0% {
-      -webkit-transform: scale(0.5);
-              transform: scale(0.5);
-    }
-    100% {
-      -webkit-transform: scale(1);
-              transform: scale(1);
-    }
-}
-@keyframes winningText {
-    0% {
-      -webkit-transform: scale(0.5);
-              transform: scale(0.5);
-    }
-    100% {
-      -webkit-transform: scale(1);
-              transform: scale(1);
-    }
 }
