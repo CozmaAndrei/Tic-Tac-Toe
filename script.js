@@ -1,14 +1,4 @@
-const cell0 = document.querySelector("#cell0");
-const cell1 = document.querySelector("#cell1");
-const cell2 = document.querySelector("#cell2");
-const cell3 = document.querySelector("#cell3");
-const cell4 = document.querySelector("#cell4");
-const cell5 = document.querySelector("#cell5");
-const cell6 = document.querySelector("#cell6");
-const cell7 = document.querySelector("#cell7");
-const cell8 = document.querySelector("#cell8");
-const winningText = document.querySelector(".winningText");
-const grid = document.querySelector(".grid");
+const message = document.querySelector(".textMessage");
 const cells = document.querySelectorAll(".cell");
 const countGamesWonPlayer1 = document.querySelector(".player1");
 const countGamesWonPlayer2 = document.querySelector(".player2");
@@ -16,113 +6,67 @@ let move = 0;
 let gamesWonPlayer1 = 0;
 let gamesWonPlayer2 = 0;
 let runningGame = true;
+const Player1 = "X";
+const Player2 = "0";
+//am construit un array cu combinatiile de castig
+const winningOptions = [[0, 3, 6], [1, 4, 7], [2, 5 ,8], [0, 1, 2], [3, 4, 5], [6, 7, 8], [2, 4, 6], [0, 4, 8]];
 
-fillTheCellWithXor0();
-
-function fillTheCellWithXor0() {
-   for (let i = 0; i < cells.length; ++i) {
-      let cell = cells[i];
-      cell.addEventListener("click", () => {
-         if (cell.innerHTML == "" && runningGame) {
-            if (move % 2 == 0) {
-               cell.innerHTML = "X"; 
-            } else {
-               cell.innerHTML = "0";
-            }
-            ++move;
-            noOneWon();
-            winningPlayerOne();
-            winningPlayerTwo()
-            countWins();
-         }
-      });
+function fillTheCells(event) {
+   if (event.target.innerHTML == "" && runningGame) {
+      if (move % 2 == 0) {
+         event.target.innerHTML = "X"; 
+      } else {
+         event.target.innerHTML = "0";
+      }
+      ++move;
+      chooseTheWinner();
+      //countWins();
    }
 }
 
-function noOneWon() {
-   if (move == cells.length) {
-      winningText.innerHTML = "No WINNER";
+function chooseTheWinner() {
+   for (const winnerModel of winningOptions) {
+      const [a, b, c] = winnerModel;
+      if (cells[a].innerHTML === Player1 && cells[b].innerHTML === Player1 && cells[c].innerHTML === Player1) {
+         message.innerHTML = "Player 1 is the WINNER !";
+         runningGame = false;
+         ++gamesWonPlayer1;
+         countGamesWonPlayer1.innerHTML = `Player 1: X || Games won: ${gamesWonPlayer1}`;
+      } else if (cells[a].innerHTML === Player2 && cells[b].innerHTML === Player2 && cells[c].innerHTML === Player2) {
+         message.innerHTML = "Player 2 is the WINNER !";
+         runningGame = false;
+         ++gamesWonPlayer2;
+         countGamesWonPlayer2.innerHTML = `Player 2: 0 || Games won: ${gamesWonPlayer2}`;
+      } else if (move == cells.length) {
+         message.innerHTML = "No WINNER";
+      }
    }
 }
 
-function winningPlayerOne() {
-   if (cell0.innerHTML == "X" && cell1.innerHTML == "X" &&
-      cell2.innerHTML == "X") {
-      winningText.innerHTML = "Player 1 is the WINNER";
-   } else if (cell3.innerHTML == "X" && cell4.innerHTML == "X" &&
-      cell5.innerHTML == "X") {
-      winningText.innerHTML = "Player 1 is the WINNER";
-   } else if (cell6.innerHTML == "X" && cell7.innerHTML == "X" &&
-      cell8.innerHTML == "X") {
-      winningText.innerHTML = "Player 1 is the WINNER";
-   } else if (cell0.innerHTML == "X" && cell3.innerHTML == "X" &&
-      cell6.innerHTML == "X") {
-      winningText.innerHTML = "Player 1 is the WINNER";
-   } else if (cell1.innerHTML == "X" && cell4.innerHTML == "X" &&
-      cell7.innerHTML == "X") {
-      winningText.innerHTML = "Player 1 is the WINNER";
-   } else if (cell2.innerHTML == "X" && cell5.innerHTML == "X" &&
-      cell8.innerHTML == "X") {
-      winningText.innerHTML = "Player 1 is the WINNER";
-   } else if (cell0.innerHTML == "X" && cell4.innerHTML == "X" &&
-      cell8.innerHTML == "X") {
-      winningText.innerHTML = "Player 1 is the WINNER";
-   } else if (cell2.innerHTML == "X" && cell4.innerHTML == "X" &&
-      cell6.innerHTML == "X") {
-      winningText.innerHTML = "Player 1 is the WINNER";
-   }
-}
-
-function winningPlayerTwo() {
-   if (cell0.innerHTML == "0" && cell1.innerHTML == "0" &&
-      cell2.innerHTML == "0") {
-      winningText.innerHTML = "Player 2 is the WINNER";
-   } else if (cell3.innerHTML == "0" && cell4.innerHTML == "0" &&
-      cell5.innerHTML == "0") {
-      winningText.innerHTML = "Player 2 is the WINNER";
-   } else if (cell6.innerHTML == "0" && cell7.innerHTML == "0" &&
-      cell8.innerHTML == "0") {
-      winningText.innerHTML = "Player 2 is the WINNER";
-   } else if (cell0.innerHTML == "0" && cell3.innerHTML == "0" &&
-      cell6.innerHTML == "0") {
-      winningText.innerHTML = "Player 2 is the WINNER";
-   } else if (cell1.innerHTML == "0" && cell4.innerHTML == "0" &&
-      cell7.innerHTML == "0") {
-      winningText.innerHTML = "Player 2 is the WINNER";
-   } else if (cell2.innerHTML == "0" && cell5.innerHTML == "0" &&
-      cell8.innerHTML == "0") {
-      winningText.innerHTML = "Player 2 is the WINNER";
-   } else if (cell0.innerHTML == "0" && cell4.innerHTML == "0" &&
-      cell8.innerHTML == "0") {
-      winningText.innerHTML = "Player 2 is the WINNER";
-   } else if (cell2.innerHTML == "0" && cell4.innerHTML == "0" &&
-      cell6.innerHTML == "0") {
-      winningText.innerHTML = "Player 2 is the WINNER";
-   }
-}
+emptyTheCell();
 
 function emptyTheCell() {
    for (let i = 0; i < cells.length; ++i) {
       let cell = cells[i];
       cell.innerHTML = "";
       move = 0;
+      cell.addEventListener("click", fillTheCells);
    }
 }
 
 function restartButton() {
    emptyTheCell();
-   winningText.innerHTML = "";
+   message.innerHTML = "";
    runningGame = true;
 }
 
-function countWins() {
-   if (winningText.innerHTML == "Player 1 is the WINNER") {
+// am renuntat la aceasta functie si am introdus instructiunile in functia chooseTheWinner()
+/*function countWins() {
+   if (message.innerHTML == "Player 1 is the WINNER !") {
       ++gamesWonPlayer1;
-      countGamesWonPlayer1.innerHTML = `Player 1: X || Games won: ${gamesWonPlayer1}`;
-      runningGame = false;
-   } else if (winningText.innerHTML == "Player 2 is the WINNER") {
+      countGamesWonPlayer1.innerHTML = `Player 1: X || Games won: ${gamesWonPlayer1}`;   
+   } else if (message.innerHTML == "Player 2 is the WINNER !") {
       ++gamesWonPlayer2;
       countGamesWonPlayer2.innerHTML = `Player 2: 0 || Games won: ${gamesWonPlayer2}`;
-      runningGame = false;
    }
-}
+}*/
